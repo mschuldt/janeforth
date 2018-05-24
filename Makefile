@@ -7,14 +7,18 @@ SHELL	:= /bin/bash
 
 all:	jonesforth
 
-jonesforth: jonesforth.S
-	gcc -m32 -nostdlib -static $(BUILD_ID_NONE) -o $@ $<
+jonesforth:  jonesforth.S
+	gcc -m32 -nostdlib -static $(BUILD_ID_NONE) -o  $@ $< -o jonesforth-core
+	./make-jonesforth-script.sh
 
 run:
 	cat jonesforth.f $(PROG) - | ./jonesforth
 
 clean:
-	rm -f jonesforth perf_dupdrop *~ core .test_*
+	rm -f jonesforth jonesforth-core perf_dupdrop *~ core .test_*
+
+install:
+	cp jonesforth /bin/
 
 # Tests.
 
