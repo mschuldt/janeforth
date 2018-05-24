@@ -1,4 +1,3 @@
-( -*- text -*- )
 
 : TEST
 	DEPTH . CR

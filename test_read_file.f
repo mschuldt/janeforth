@@ -1,4 +1,4 @@
-( -*- text -*-
+(
 	Test READ-FILE.
 	$Id: test_read_file.f,v 1.2 2007-10-22 18:53:13 rich Exp $
 )

@@ -1,4 +1,3 @@
-( -*- text -*- )
 
 : TEST4 PRINT-STACK-TRACE ;
 

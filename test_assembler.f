@@ -1,4 +1,3 @@
-( -*- text -*- )
 
 : 2DROP INLINE DROP INLINE DROP ;CODE
 
