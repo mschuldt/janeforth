@@ -3,22 +3,22 @@
 	$Id: test_read_file.f,v 1.2 2007-10-22 18:53:13 rich Exp $
 )
 
-0 VALUE FD
-100 CELLS ALLOT CONSTANT BUFFER
+0 value FD
+100 cells allot constant BUFFER
 
 : TEST
-	S" test_read_file.f.out" R/O OPEN-FILE
-	?DUP IF S" test_read_file.f.out" PERROR QUIT THEN
+	s" test_read_file.f.out" r/o open-file
+	?dup if s" test_read_file.f.out" perror quit then
 
-	TO FD
+	to FD
 
-	BEGIN
-		BUFFER 100 CELLS FD READ-FILE
-		?DUP IF S" READ-FILE" PERROR QUIT THEN
-		DUP
-		BUFFER SWAP TELL
-	0= UNTIL
+	begin
+		BUFFER 100 cells FD read-file
+		?dup if s" READ-FILE" perror quit then
+		dup
+		BUFFER swap tell
+	0= until
 
-	FD CLOSE-FILE
-	?DUP IF S" CLOSE-FILE" PERROR QUIT THEN
+	FD close-file
+	?dup if s" CLOSE-FILE" perror quit then
 ;

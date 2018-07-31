@@ -1,16 +1,16 @@
 
 : TEST
-	DEPTH . CR
+	depth . cr
 
-	42 DUP . . CR
-	23 DROP DEPTH . CR
-	1 2 SWAP . . CR
-	1 2 OVER . . . CR
-	1 2 3 -ROT . . . CR
-	1 2 3 ROT . . . CR
-	1 2 3 4 2DROP . . CR
-	1 2 3 4 2DUP . . . . . . CR
-	1 2 3 4 2SWAP . . . . CR
+	42 dup . . cr
+	23 drop depth . cr
+	1 2 swap . . cr
+	1 2 over . . . cr
+	1 2 3 -rot . . . cr
+	1 2 3 rot . . . cr
+	1 2 3 4 2drop . . cr
+	1 2 3 4 2dup . . . . . . cr
+	1 2 3 4 2swap . . . . cr
 
-	DEPTH . CR
+	depth . cr
 ;

@@ -1,18 +1,18 @@
 
-: 2DROP INLINE DROP INLINE DROP ;CODE
+: 2drop inline drop inline drop ;code
 
-: C@++ INLINE DUP INLINE 1+ INLINE SWAP INLINE C@ ;CODE
+: c@++ inline dup inline 1+ inline swap inline c@ ;code
 
 : TEST
-	." 2DROP: "	1 2 3 4 2DROP . . CR
+	." 2drop: "	1 2 3 4 2drop . . cr
 
-	S" testing" DROP
-	C@++ EMIT CR
-	C@++ EMIT CR
-	C@++ EMIT CR
-	C@++ EMIT CR
-	C@++ EMIT CR
-	C@++ EMIT CR
-	C@++ EMIT CR
-	DROP
+	s" testing" drop
+	c@++ emit cr
+	c@++ emit cr
+	c@++ emit cr
+	c@++ emit cr
+	c@++ emit cr
+	c@++ emit cr
+	c@++ emit cr
+	drop
 ;

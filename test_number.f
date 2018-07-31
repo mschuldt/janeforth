@@ -1,10 +1,10 @@
 
 : TEST
-	123                                . CR
-	[ HEX -7F ] LITERAL      DECIMAL   . CR
-	[ HEX 7FF77FF7 ] LITERAL HEX       . CR
-	[ HEX -7FF77FF7 ] LITERAL 2 BASE ! . CR
-	[ 2 BASE ! 1111111111101110111111111110111 ] LITERAL HEX . CR
+	123                                . cr
+	[ hex -7F ] literal      decimal   . cr
+	[ hex 7FF77FF7 ] literal hex       . cr
+	[ hex -7FF77FF7 ] literal 2 base ! . cr
+	[ 2 base ! 1111111111101110111111111110111 ] literal hex . cr
 ;
 
-DECIMAL ( restore immediate-mode base )
+decimal ( restore immediate-mode base )
