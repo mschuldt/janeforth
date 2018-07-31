@@ -1108,11 +1108,11 @@ code_\label :			// assembler code follows
 
 	.macro defvar name, namelen, flags=0, label, initial=0
 	defcode \name,\namelen,\flags,\label
-	push $var_\name
+	push $var_\label
 	NEXT
 	.data
 	.align 4
-var_\name :
+var_\label :
 	.int \initial
 	.endm
 
