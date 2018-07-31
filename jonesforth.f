@@ -253,7 +253,7 @@
 : pick ( x_u ... x_1 x_0 u -- x_u ... x_1 x_0 x_u )
 	1+		( add one because of 'u' on the stack )
 	4 *		( multiply by the word size )
-	dsp@ +		( add to the stack pointer )
+	sp@ +		( add to the stack pointer )
 	@    		( and fetch )
 ;
 
@@ -404,7 +404,7 @@
 
 ( DEPTH returns the depth of the stack. )
 : depth		( -- n )
-	s0 @ dsp@ -
+	s0 @ sp@ -
 	4-			( adjust because S0 was on the stack when we pushed DSP )
         4 /                     ( divide by the cell size to get item count )
 ;
@@ -418,7 +418,7 @@
 	s0 @		( get current stack pointer )
 	begin
 		4-		( move down )
-		dup dsp@ 4+  >
+		dup sp@ 4+  >
 	while
 		dup @ u.	( print the stack element )
 		space
@@ -1288,7 +1288,7 @@
 ;
 
 : catch		( xt -- exn? )
-	dsp@ 4+ >r		( save parameter stack pointer (+4 because of xt) on the return stack )
+	sp@ 4+ >r		( save parameter stack pointer (+4 because of xt) on the return stack )
 	' exception-marker 4+	( push the address of the RDROP inside EXCEPTION-MARKER ... )
 	>r			( ... on to the return stack so it acts like a return address )
 	execute			( execute the nested function )
@@ -1312,7 +1312,7 @@
 				4-			( reserve space on the stack to store n )
 				swap over		( dsp n dsp )
 				!			( write n on the stack )
-				dsp! exit		( restore the parameter stack pointer, immediately exit )
+				sp! exit		( restore the parameter stack pointer, immediately exit )
 			then
 			4+
 		repeat

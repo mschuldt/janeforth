@@ -1219,12 +1219,12 @@ var_\label :
 	stack for us, and it is accessed through %esp.
 */
 
-	defcode "dsp@",4,,DSPFETCH
+	defcode "sp@",3,,DSPFETCH
 	mov %esp,%eax
 	push %eax
 	NEXT
 
-	defcode "dsp!",4,,DSPSTORE
+	defcode "sp!",3,,DSPSTORE
 	pop %esp
 	NEXT
 
