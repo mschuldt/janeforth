@@ -422,6 +422,7 @@
 : depth		( -- n )
 	s0 @ dsp@ -
 	4-			( adjust because S0 was on the stack when we pushed DSP )
+        4 /                     ( divide by the cell size to get item count )
 ;
 
 (
