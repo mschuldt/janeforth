@@ -415,13 +415,13 @@
 )
 : .s		( -- )
         [ char < ] literal emit depth 0 .r [ char > ] literal emit space ( print stack depth)
-	dsp@		( get current stack pointer )
+	s0 @		( get current stack pointer )
 	begin
-		dup s0 @ <
+		4-		( move down )
+		dup dsp@ 4+  >
 	while
 		dup @ u.	( print the stack element )
 		space
-		4+		( move up )
 	repeat
 	drop
 ;
