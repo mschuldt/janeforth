@@ -26,11 +26,11 @@ TESTS	:= $(patsubst %.f,%.test,$(wildcard test_*.f))
 
 test check: $(TESTS)
 
-test_%.test: test_%.f jonesforth
+test_%.test: test_%.f jonesforth-core
 	@echo -n "$< ... "
 	@rm -f .$@
 	@cat <(echo ': TEST-MODE ;') jonesforth.f $< <(echo 'TEST') | \
-	  ./jonesforth 2>&1 | \
+	  ./jonesforth-core 2>&1 | \
 	  sed 's/DSP=[0-9]*//g' > .$@
 	@diff -u .$@ $<.out
 	@rm -f .$@
@@ -42,7 +42,7 @@ perf_dupdrop: perf_dupdrop.c
 	gcc -O3 -Wall -Werror -o $@ $<
 
 run_perf_dupdrop: jonesforth
-	cat <(echo ': TEST-MODE ;') jonesforth.f perf_dupdrop.f | ./jonesforth
+	cat <(echo ': TEST-MODE ;') jonesforth.f perf_dupdrop.f | ./jonesforth-core
 
 .SUFFIXES: .f .test
 .PHONY: test check run run_perf_dupdrop
