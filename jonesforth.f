@@ -414,6 +414,7 @@
 	Very useful for debugging.
 )
 : .s		( -- )
+        [ char < ] literal emit depth 0 .r [ char > ] literal emit space ( print stack depth)
 	dsp@		( get current stack pointer )
 	begin
 		dup s0 @ <
