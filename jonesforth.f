@@ -319,22 +319,6 @@
 	emit
 ;
 
-(
-	FORTH word .S prints the contents of the stack.  It doesn't alter the stack.
-	Very useful for debugging.
-)
-: .s		( -- )
-	dsp@		( get current stack pointer )
-	begin
-		dup s0 @ <
-	while
-		dup @ u.	( print the stack element )
-		space
-		4+		( move up )
-	repeat
-	drop
-;
-
 ( This word returns the width (in characters) of an unsigned number in the current base )
 : uwidth	( u -- width )
 	base @ /	( rem quot )
@@ -423,6 +407,22 @@
 	s0 @ dsp@ -
 	4-			( adjust because S0 was on the stack when we pushed DSP )
         4 /                     ( divide by the cell size to get item count )
+;
+
+(
+	FORTH word .S prints the contents of the stack.  It doesn't alter the stack.
+	Very useful for debugging.
+)
+: .s		( -- )
+	dsp@		( get current stack pointer )
+	begin
+		dup s0 @ <
+	while
+		dup @ u.	( print the stack element )
+		space
+		4+		( move up )
+	repeat
+	drop
 ;
 
 (
