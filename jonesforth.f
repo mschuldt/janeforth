@@ -505,8 +505,8 @@
 	In immediate mode we just keep reading characters and printing them until we get to
 	the next double quote.
 
-	In compile mode we use S" to store the string, then add TELL afterwards:
-		LITSTRING <string length> <string rounded up to 4 bytes> TELL
+	In compile mode we use S" to store the string, then add TYPE afterwards:
+		LITSTRING <string length> <string rounded up to 4 bytes> TYPE
 
 	It may be interesting to note the use of [COMPILE] to turn the call to the immediate
 	word S" into compilation of that word.  It compiles it into the definition of .",
@@ -516,7 +516,7 @@
 : ." immediate		( -- )
 	state @ if	( compiling? )
 		[compile] s"	( read the string, and compile LITSTRING, etc. )
-		' tell ,	( compile the final TELL )
+		' type ,	( compile the final TYPE )
 	else
 		( In immediate mode, just read characters and print them until we get
 		  to the ending double quote. )
@@ -1061,7 +1061,7 @@
 			[ char S ] literal emit '"' emit space ( print S"<space> )
 			4 + dup @		( get the length word )
 			swap 4 + swap		( end start+4 length )
-			2dup tell		( print the string )
+			2dup type		( print the string )
 			'"' emit space		( finish the string with a final quote )
 			+ aligned		( end start+4+len, aligned )
 			4 -			( because we're about to add 4 below )
@@ -1386,7 +1386,7 @@
 									should be consumed / copied immediately.
 									FORTH string should not contain NULs.
 
-	For example, DUP STRLEN TELL prints a C string.
+	For example, DUP STRLEN TYPE prints a C string.
 )
 
 (
@@ -1484,7 +1484,7 @@
 	n ARGV gets the nth command line argument.
 
 	For example to print the command name you would do:
-		0 ARGV TELL CR
+		0 ARGV TYPE CR
 )
 : argv ( n -- str u )
 	1+ cells s0 @ +	( get the address of argv[n] entry )
@@ -1497,7 +1497,7 @@
 	with a NULL pointer.
 
 	For example to print the first string in the environment you could do:
-		ENVIRON @ DUP STRLEN TELL
+		ENVIRON @ DUP STRLEN TYPE
 )
 : environ	( -- addr )
 	argc		( number of command line parameters on the stack to skip )
@@ -1620,7 +1620,7 @@
 	list of strerror strings available, so all we can do is print the errno.
 )
 : perror	( errno addr u -- )
-	tell
+	type
 	':' emit space
 	." ERRNO="
 	. cr

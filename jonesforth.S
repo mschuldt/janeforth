@@ -2043,7 +2043,7 @@ _COMMA:
 	LITSTRING is a primitive used to implement the ." and S" operators (which are written in
 	FORTH).  See the definition of those operators later.
 
-	TELL just prints a string.  It's more efficient to define this in assembly because we
+	TYPE just prints a string.  It's more efficient to define this in assembly because we
 	can make it a single Linux syscall.
 */
 
@@ -2056,7 +2056,7 @@ _COMMA:
 	andl $~3,%esi
 	NEXT
 
-	defcode "tell",4,,TELL
+	defcode "type",4,,TYPE
 	mov $1,%ebx		// 1st param: stdout
 	pop %edx		// 3rd param: length of string
 	pop %ecx		// 2nd param: address of string
