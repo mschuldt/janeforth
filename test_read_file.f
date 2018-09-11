@@ -16,7 +16,7 @@
 		BUFFER 100 cells FD read-file
 		?dup if s" READ-FILE" perror quit then
 		dup
-		BUFFER swap tell
+		BUFFER swap type
 	0= until
 
 	FD close-file
