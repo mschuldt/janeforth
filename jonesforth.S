@@ -1975,7 +1975,14 @@ _COMMA:
 
 	(If you don't understand how LIT2 works, then you should review the material about compiling words
 	and immediate mode).
+*/
+	defcode "'",1,,TICK
+	.int WORD
+        .int FIND
+        .int TCFA
+	.int EXIT
 
+/*
 	This definition of ['] uses a cheat which I copied from buzzard92.  As a result it only works in
 	compiled code.
        TODO: discuss ' vs [']

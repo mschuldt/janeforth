@@ -7,8 +7,10 @@ Modifications:
  - all words are lower cased
  - 'depth' returns the depth in cells instead of bytes
  - .s  prints stack in same format as gforth, with depth and tos on the right
+ - tick that behaves as expected in compile and interpret modes
 
 Renamed words:
  dsp@ -> sp@
  dsp@ -> sp!
  tell -> type
+ '    -> [']
