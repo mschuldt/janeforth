@@ -1,0 +1,14 @@
+
+Janeforth is a copy of Jonesforth containing my modifications and extensions.
+originally cloned from: http://git.annexia.org/?p=jonesforth.git;a=summary
+
+
+Modifications:
+ - all words are lower cased
+ - 'depth' returns the depth in cells instead of bytes
+ - .s  prints stack in same format as gforth, with depth and tos on the right
+
+Renamed words:
+ dsp@ -> sp@
+ dsp@ -> sp!
+ tell -> type
