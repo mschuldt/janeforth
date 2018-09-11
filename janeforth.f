@@ -4,7 +4,7 @@
 \	This is PUBLIC DOMAIN (see public domain release statement below).
 \	$Id: jonesforth.f,v 1.18 2009-09-11 08:32:33 rich Exp $
 \
-\	The first part of this tutorial is in jonesforth.S.  Get if from http://annexia.org/forth
+\	The first part of this tutorial is in janeforth.S.  Get if from http://annexia.org/forth
 \
 \	PUBLIC DOMAIN ----------------------------------------------------------------------
 \
@@ -1776,7 +1776,7 @@ hide =next
 
 : welcome
 	s" TEST-MODE" find not if
-		." JONESFORTH VERSION " version . cr
+		." JANEFORTH VERSION " version . cr
 		unused . ." CELLS REMAINING" cr
 		." OK "
 	then

@@ -3,7 +3,7 @@
 	This is PUBLIC DOMAIN (see public domain release statement below).
 	$Id: jonesforth.S,v 1.47 2009-09-11 08:33:13 rich Exp $
 
-	gcc -m32 -nostdlib -static -Wl,-Ttext,0 -Wl,--build-id=none -o jonesforth jonesforth.S
+	gcc -m32 -nostdlib -static -Wl,-Ttext,0 -Wl,--build-id=none -o janeforth janeforth.S
 */
 	.set JONES_VERSION,47
 /*
@@ -119,18 +119,18 @@
 	this on a 64 bit AMD Opteron).
 
 	Again, to assemble this you will need gcc and gas (the GNU assembler).  The commands to
-	assemble and run the code (save this file as 'jonesforth.S') are:
+	assemble and run the code (save this file as 'janeforth.S') are:
 
-	gcc -m32 -nostdlib -static -Wl,-Ttext,0 -Wl,--build-id=none -o jonesforth jonesforth.S
-	cat jonesforth.f - | ./jonesforth
+	gcc -m32 -nostdlib -static -Wl,-Ttext,0 -Wl,--build-id=none -o janeforth janeforth.S
+	cat janeforth.f - | ./janeforth
 
 	If you want to run your own FORTH programs you can do:
 
-	cat jonesforth.f myprog.f | ./jonesforth
+	cat janeforth.f myprog.f | ./janeforth
 
 	If you want to load your own FORTH code and then continue reading user commands, you can do:
 
-	cat jonesforth.f myfunctions.f - | ./jonesforth
+	cat janeforth.f myfunctions.f - | ./janeforth
 
 	ASSEMBLER ----------------------------------------------------------------------
 
@@ -2311,10 +2311,10 @@ buffer:
 
 	I used to append this here in the assembly file, but I got sick of fighting against gas's
 	crack-smoking (lack of) multiline string syntax.  So now that is in a separate file called
-	jonesforth.f
+	janeforth.f
 
 	If you don't already have that file, download it from http://annexia.org/forth in order
 	to continue the tutorial.
 */
 
-/* END OF jonesforth.S */
+/* END OF janeforth.S */
