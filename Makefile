@@ -1,4 +1,3 @@
-# $Id: Makefile,v 1.9 2007-10-22 18:53:12 rich Exp $
 
 #BUILD_ID_NONE := -Wl,--build-id=none 
 BUILD_ID_NONE := 
@@ -46,9 +45,3 @@ run_perf_dupdrop: janeforth
 
 .SUFFIXES: .f .test
 .PHONY: test check run run_perf_dupdrop
-
-remote:
-	scp janeforth.S janeforth.f rjones@oirase:Desktop/
-	ssh rjones@oirase sh -c '"rm -f Desktop/janeforth; \
-	  gcc -m32 -nostdlib -static -Wl,-Ttext,0 -o Desktop/janeforth Desktop/janeforth.S; \
-	  cat Desktop/janeforth.f - | Desktop/janeforth arg1 arg2 arg3"'
