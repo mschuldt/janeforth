@@ -70,7 +70,7 @@
 
 \ LITERAL takes whatever is on the stack and compiles LIT <foo>
 : literal immediate
-	' lit ,		\ compile LIT
+	['] lit ,		\ compile LIT
 	,		\ compile the literal itself (from the stack)
 	;
 
@@ -136,7 +136,7 @@
 \ the address of the 0BRANCH on the stack.  Later when we see THEN, we pop that address
 \ off the stack, calculate the offset, and back-fill the offset.
 : if immediate
-	' 0branch ,	\ compile 0BRANCH
+	['] 0branch ,	\ compile 0BRANCH
 	here @		\ save location of the offset on the stack
 	0 ,		\ compile a dummy offset
 ;
@@ -148,7 +148,7 @@
 ;
 
 : else immediate
-	' branch ,	\ definite branch to just over the false-part
+	['] branch ,	\ definite branch to just over the false-part
 	here @		\ save location of the offset on the stack
 	0 ,		\ compile a dummy offset
 	swap		\ now back-fill the original (IF) offset
@@ -166,7 +166,7 @@
 ;
 
 : until immediate
-	' 0branch ,	\ compile 0BRANCH
+	['] 0branch ,	\ compile 0BRANCH
 	here @ -	\ calculate the offset from the address saved on the stack
 	,		\ compile the offset here
 ;
@@ -176,7 +176,7 @@
 \	where OFFSET points back to the loop-part
 \ In other words, an infinite loop which can only be returned from with EXIT
 : again immediate
-	' branch ,	\ compile BRANCH
+	['] branch ,	\ compile BRANCH
 	here @ -	\ calculate the offset back
 	,		\ compile the offset here
 ;
@@ -186,13 +186,13 @@
 \	where OFFSET points back to condition (the beginning) and OFFSET2 points to after the whole piece of code
 \ So this is like a while (condition) { loop-part } loop in the C language
 : while immediate
-	' 0branch ,	\ compile 0BRANCH
+	['] 0branch ,	\ compile 0BRANCH
 	here @		\ save location of the offset2 on the stack
 	0 ,		\ compile a dummy offset2
 ;
 
 : repeat immediate
-	' branch ,	\ compile BRANCH
+	['] branch ,	\ compile BRANCH
 	swap		\ get the original offset (from BEGIN)
 	here @ - ,	\ and compile it after BRANCH
 	dup
@@ -209,7 +209,7 @@
 \ implement them all in terms of the primitives 0BRANCH and BRANCH, but instead reusing simpler
 \ control words like (in this instance) IF.
 : unless immediate
-	' not ,		\ compile NOT (to reverse the test)
+	['] not ,		\ compile NOT (to reverse the test)
 	[compile] if	\ continue by calling the normal IF
 ;
 
@@ -466,7 +466,7 @@
 
 : s" immediate		( -- addr len )
 	state @ if	( compiling? )
-		' litstring ,	( compile LITSTRING )
+		['] litstring ,	( compile LITSTRING )
 		here @		( save the address of the length word on the stack )
 		0 ,		( dummy length - we don't know what it is yet )
 		begin
@@ -516,7 +516,7 @@
 : ." immediate		( -- )
 	state @ if	( compiling? )
 		[compile] s"	( read the string, and compile LITSTRING, etc. )
-		' type ,	( compile the final TYPE )
+		['] type ,	( compile the final TYPE )
 	else
 		( In immediate mode, just read characters and print them until we get
 		  to the ending double quote. )
@@ -591,9 +591,9 @@
 	word		( get the name (the name follows CONSTANT) )
 	create		( make the dictionary entry )
 	docol ,		( append DOCOL (the codeword field of this word) )
-	' lit ,		( append the codeword LIT )
+	['] lit ,		( append the codeword LIT )
 	,		( append the value on the top of the stack )
-	' exit ,	( append the codeword EXIT )
+	['] exit ,	( append the codeword EXIT )
 ;
 
 (
@@ -640,9 +640,9 @@
 	1 cells allot	( allocate 1 cell of memory, push the pointer to this memory )
 	word create	( make the dictionary entry (the name follows VARIABLE) )
 	docol ,		( append DOCOL (the codeword field of this word) )
-	' lit ,		( append the codeword LIT )
+	['] lit ,		( append the codeword LIT )
 	,		( append the pointer to the new memory )
-	' exit ,	( append the codeword EXIT )
+	['] exit ,	( append the codeword EXIT )
 ;
 
 (
@@ -699,9 +699,9 @@
 : value		( n -- )
 	word create	( make the dictionary entry (the name follows VALUE) )
 	docol ,		( append DOCOL )
-	' lit ,		( append the codeword LIT )
+	['] lit ,		( append the codeword LIT )
 	,		( append the initial value )
-	' exit ,	( append the codeword EXIT )
+	['] exit ,	( append the codeword EXIT )
 ;
 
 : to immediate	( n -- )
@@ -710,9 +710,9 @@
 	>dfa		( get a pointer to the first data field (the 'LIT') )
 	4+		( increment to point at the value )
 	state @ if	( compiling? )
-		' lit ,		( compile LIT )
+		['] lit ,		( compile LIT )
 		,		( compile the address of the value )
-		' ! ,		( compile ! )
+		['] ! ,		( compile ! )
 	else		( immediate mode )
 		!		( update it straightaway )
 	then
@@ -725,9 +725,9 @@
 	>dfa		( get a pointer to the first data field (the 'LIT') )
 	4+		( increment to point at the value )
 	state @ if	( compiling? )
-		' lit ,		( compile LIT )
+		['] lit ,		( compile LIT )
 		,		( compile the address of the value )
-		' +! ,		( compile +! )
+		['] +! ,		( compile +! )
 	else		( immediate mode )
 		+!		( update it straightaway )
 	then
@@ -953,10 +953,10 @@
 ;
 
 : of immediate
-	' over ,	( compile OVER )
-	' = ,		( compile = )
+	['] over ,	( compile OVER )
+	['] = ,		( compile = )
 	[compile] if	( compile IF )
-	' drop ,  	( compile DROP )
+	['] drop ,  	( compile DROP )
 ;
 
 : endof immediate
@@ -964,7 +964,7 @@
 ;
 
 : endcase immediate
-	' drop ,	( compile DROP )
+	['] drop ,	( compile DROP )
 
 	( keep compiling THEN until we get to our zero marker )
 	begin
@@ -1053,11 +1053,11 @@
 		dup @		( end start codeword )
 
 		case
-		' lit of		( is it LIT ? )
+		['] lit of		( is it LIT ? )
 			4 + dup @		( get next word which is the integer constant )
 			.			( and print it )
 		endof
-		' litstring of		( is it LITSTRING ? )
+		['] litstring of		( is it LITSTRING ? )
 			[ char S ] literal emit '"' emit space ( print S"<space> )
 			4 + dup @		( get the length word )
 			swap 4 + swap		( end start+4 length )
@@ -1066,13 +1066,13 @@
 			+ aligned		( end start+4+len, aligned )
 			4 -			( because we're about to add 4 below )
 		endof
-		' 0branch of		( is it 0BRANCH ? )
+		['] 0branch of		( is it 0BRANCH ? )
 			." 0branch ( "
 			4 + dup @		( print the offset )
 			.
 			." ) "
 		endof
-		' branch of		( is it BRANCH ? )
+		['] branch of		( is it BRANCH ? )
 			." branch ( "
 			4 + dup @		( print the offset )
 			.
@@ -1084,7 +1084,7 @@
 			cfa>			( and force it to be printed as a dictionary entry )
 			id. space
 		endof
-		' exit of		( is it EXIT? )
+		['] exit of		( is it EXIT? )
 			( We expect the last word to be EXIT, and if it is then we don't print it
 			  because EXIT is normally implied by ;.  EXIT can also appear in the middle
 			  of words, and then it needs to be printed. )
@@ -1187,10 +1187,6 @@
 	]		( go into compile mode )
 ;
 
-: ['] immediate
-	' lit ,		( compile LIT )
-;
-
 (
 	EXCEPTIONS ----------------------------------------------------------------------
 
@@ -1289,7 +1285,7 @@
 
 : catch		( xt -- exn? )
 	sp@ 4+ >r		( save parameter stack pointer (+4 because of xt) on the return stack )
-	' exception-marker 4+	( push the address of the RDROP inside EXCEPTION-MARKER ... )
+	['] exception-marker 4+	( push the address of the RDROP inside EXCEPTION-MARKER ... )
 	>r			( ... on to the return stack so it acts like a return address )
 	execute			( execute the nested function )
 ;
@@ -1301,7 +1297,7 @@
 			dup r0 4- <		( RSP < R0 )
 		while
 			dup @			( get the return stack entry )
-			' exception-marker 4+ = if	( found the EXCEPTION-MARKER on the return stack )
+			['] exception-marker 4+ = if	( found the EXCEPTION-MARKER on the return stack )
 				4+			( skip the EXCEPTION-MARKER on the return stack )
 				rsp!			( restore the return stack pointer )
 
@@ -1344,7 +1340,7 @@
 	while
 		dup @			( get the return stack entry )
 		case
-		' exception-marker 4+ of	( is it the exception stack frame? )
+		['] exception-marker 4+ of	( is it the exception stack frame? )
 			." catch ( DSP="
 			4+ dup @ u.		( print saved stack pointer )
 			." ) "
@@ -1399,7 +1395,7 @@
 )
 : z" immediate
 	state @ if	( compiling? )
-		' litstring ,	( compile LITSTRING )
+		['] litstring ,	( compile LITSTRING )
 		here @		( save the address of the length word on the stack )
 		0 ,		( dummy length - we don't know what it is yet )
 		begin
@@ -1417,7 +1413,7 @@
 		4-		( subtract 4 (because we measured from the start of the length word) )
 		swap !		( and back-fill the length location )
 		align		( round up to next multiple of 4 bytes for the remaining code )
-		' drop ,	( compile DROP (to drop the length) )
+		['] drop ,	( compile DROP (to drop the length) )
 	else		( immediate mode )
 		here @		( get the start address of the temporary space )
 		begin

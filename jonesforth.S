@@ -1976,11 +1976,11 @@ _COMMA:
 	(If you don't understand how LIT2 works, then you should review the material about compiling words
 	and immediate mode).
 
-	This definition of ' uses a cheat which I copied from buzzard92.  As a result it only works in
-	compiled code.  It is possible to write a version of ' based on WORD, FIND, >CFA which works in
-	immediate mode too.
+	This definition of ['] uses a cheat which I copied from buzzard92.  As a result it only works in
+	compiled code.
+       TODO: discuss ' vs [']
 */
-	defcode "'",1,,TICK
+	defcode "[']",3,,BTICKB
 	lodsl			// Get the address of the next word and skip it.
 	pushl %eax		// Push it on the stack.
 	NEXT
