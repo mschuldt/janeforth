@@ -5,7 +5,7 @@
 
 	gcc -m32 -nostdlib -static -Wl,-Ttext,0 -Wl,--build-id=none -o janeforth janeforth.S
 */
-	.set JONES_VERSION,47
+	.set JANEFORTH_VERSION,1
 /*
 	INTRODUCTION ----------------------------------------------------------------------
 
@@ -1159,7 +1159,7 @@ var_\label :
 	NEXT
 	.endm
 
-	defconst "version",7,,VERSION,JONES_VERSION
+	defconst "version",7,,VERSION,JANEFORTH_VERSION
 	defconst "r0",2,,RZ,return_stack_top
 	defconst "docol",5,,__DOCOL,DOCOL
 	defconst "f_immed",7,,__F_IMMED,F_IMMED
