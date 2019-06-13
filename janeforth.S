@@ -944,6 +944,19 @@ code_\label :			// assembler code follows
         shll $1, (%esp)
 	NEXT
 
+	defcode "lshift",6,,LSHIFT	// left shift
+        movb (%esp), %cl
+        pop %eax
+        shll %cl, (%esp)
+	NEXT
+
+	defcode "rshift",6,,RSHIFT	// left right
+        movb (%esp), %cl
+        pop %eax
+        shrl %cl, (%esp)
+	NEXT
+
+
 /*
 	RETURNING FROM FORTH WORDS ----------------------------------------------------------------------
 
