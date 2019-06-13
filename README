@@ -15,3 +15,6 @@ Renamed words:
  tell -> type
  '    -> [']
  rsp@ -> r@
+
+added:
+  nil

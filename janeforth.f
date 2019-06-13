@@ -595,6 +595,8 @@
 	['] exit ,	( append the codeword EXIT )
 ;
 
+0 constant nil
+
 (
 	VARIABLE is a little bit harder because we need somewhere to put the variable.  There is
 	nothing particularly special about the user memory (the area of memory pointed to by HERE
