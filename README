@@ -15,6 +15,7 @@ Renamed words:
  tell -> type
  '    -> [']
  rsp@ -> r@
+ [compile] -> postpone
 
 added:
   nil

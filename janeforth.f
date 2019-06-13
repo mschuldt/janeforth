@@ -94,8 +94,8 @@
 : '-' [ char - ] literal ;
 : '.' [ char . ] literal ;
 
-\ While compiling, '[COMPILE] word' compiles 'word' if it would otherwise be IMMEDIATE.
-: [compile] immediate
+\ While compiling, 'POSTPONE word' compiles 'word' if it would otherwise be IMMEDIATE.
+: postpone immediate
 	word		\ get the next word
 	find		\ find it in the dictionary
 	>cfa		\ get its codeword
@@ -201,15 +201,15 @@
 
 \ UNLESS is the same as IF but the test is reversed.
 \
-\ Note the use of [COMPILE]: Since IF is IMMEDIATE we don't want it to be executed while UNLESS
+\ Note the use of POSTPONE: Since IF is IMMEDIATE we don't want it to be executed while UNLESS
 \ is compiling, but while UNLESS is running (which happens to be when whatever word using UNLESS is
-\ being compiled -- whew!).  So we use [COMPILE] to reverse the effect of marking IF as immediate.
+\ being compiled -- whew!).  So we use POSTPONE to reverse the effect of marking IF as immediate.
 \ This trick is generally used when we want to write our own control words without having to
 \ implement them all in terms of the primitives 0BRANCH and BRANCH, but instead reusing simpler
 \ control words like (in this instance) IF.
 : unless immediate
 	['] not ,		\ compile NOT (to reverse the test)
-	[compile] if	\ continue by calling the normal IF
+	postpone if	\ continue by calling the normal IF
 ;
 
 \	COMMENTS ----------------------------------------------------------------------
@@ -507,14 +507,14 @@
 	In compile mode we use S" to store the string, then add TYPE afterwards:
 		LITSTRING <string length> <string rounded up to 4 bytes> TYPE
 
-	It may be interesting to note the use of [COMPILE] to turn the call to the immediate
+	It may be interesting to note the use of POSTPONE to turn the call to the immediate
 	word S" into compilation of that word.  It compiles it into the definition of .",
 	not into the definition of the word being compiled when this is running (complicated
 	enough for you?)
 )
 : ." immediate		( -- )
 	state @ if	( compiling? )
-		[compile] s"	( read the string, and compile LITSTRING, etc. )
+		postpone s"	( read the string, and compile LITSTRING, etc. )
 		['] type ,	( compile the final TYPE )
 	else
 		( In immediate mode, just read characters and print them until we get
@@ -943,7 +943,7 @@
 	some number of non-zeroes, followed by a zero.  The number of non-zeroes is how many
 	times IF has been called, so how many times we need to match it with THEN.
 
-	This code uses [COMPILE] so that we compile calls to IF, ELSE, THEN instead of
+	This code uses POSTPONE so that we compile calls to IF, ELSE, THEN instead of
 	actually calling them while we're compiling the words below.
 
 	As is the case with all of our control structures, they only work within word
@@ -956,12 +956,12 @@
 : of immediate
 	['] over ,	( compile OVER )
 	['] = ,		( compile = )
-	[compile] if	( compile IF )
+	postpone if	( compile IF )
 	['] drop ,  	( compile DROP )
 ;
 
 : endof immediate
-	[compile] else	( ENDOF is the same as ELSE )
+	postpone else	( ENDOF is the same as ELSE )
 ;
 
 : endcase immediate
@@ -971,7 +971,7 @@
 	begin
 		?dup
 	while
-		[compile] then
+		postpone then
 	repeat
 ;
 
@@ -1647,12 +1647,12 @@ hex
 : next immediate AD c, FF c, 20 c, ;
 
 : ;code immediate
-	[compile] next		( end the word with NEXT macro )
+	postpone next		( end the word with NEXT macro )
 	align			( machine code is assembled in bytes so isn't necessarily aligned at the end )
 	latest @ dup
 	hidden			( unhide the word )
 	dup >dfa swap >cfa !	( change the codeword to point to the data area )
-	[compile] [		( go back to immediate mode )
+	postpone [		( go back to immediate mode )
 ;
 
 ( The i386 registers )
