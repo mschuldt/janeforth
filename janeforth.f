@@ -1291,7 +1291,7 @@
 
 : throw		( n -- )
 	?dup if			( only act if the exception code <> 0 )
-		rsp@ 			( get return stack pointer )
+		r@ 			( get return stack pointer )
 		begin
 			dup r0 4- <		( RSP < R0 )
 		while
@@ -1333,7 +1333,7 @@
 
 ( Print a stack trace by walking up the return stack. )
 : print-stack-trace
-	rsp@				( start at caller of this function )
+	r@				( start at caller of this function )
 	begin
 		dup r0 4- <		( RSP < R0 )
 	while

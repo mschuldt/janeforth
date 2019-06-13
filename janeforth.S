@@ -1198,7 +1198,7 @@ var_\label :
 	push %eax		// and push on to parameter stack
 	NEXT
 
-	defcode "rsp@",4,,RSPFETCH
+	defcode "r@",2,,RSPFETCH
 	push %ebp
 	NEXT
 
