@@ -102,6 +102,8 @@
 	,		\ and compile that
 ;
 
+: [char] immediate char postpone literal ;
+
 \ RECURSE makes a recursive call to the current word that is being compiled.
 \
 \ Normally while a word is being compiled, it is marked HIDDEN so that references to the
