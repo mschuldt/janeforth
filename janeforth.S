@@ -936,6 +936,14 @@ code_\label :			// assembler code follows
 	notl (%esp)
 	NEXT
 
+	defcode "2/",2,,TWODIV
+        shrl $1, (%esp)
+	NEXT
+
+	defcode "2*",2,,TWOMUL
+        shll $1, (%esp)
+	NEXT
+
 /*
 	RETURNING FROM FORTH WORDS ----------------------------------------------------------------------
 
