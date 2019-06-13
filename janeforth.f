@@ -1079,10 +1079,16 @@
 			.
 			." ) "
 		endof
-		' ' of			( is it ' (TICK) ? )
+		['] ' of		( is it ' (TICK) ? )
 			[ char ' ] literal emit space
 			4 + dup @		( get the next codeword )
 			cfa>			( and force it to be printed as a dictionary entry )
+			id. space
+		endof
+		['] ['] of		( is it ['] ? )
+			." [.] "
+			4 + dup @
+			cfa>
 			id. space
 		endof
 		['] exit of		( is it EXIT? )
