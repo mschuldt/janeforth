@@ -1965,6 +1965,14 @@ _COMMA:
 	xorb $F_HIDDEN,(%edi)	// Toggle the HIDDEN bit.
 	NEXT
 
+	defcode "reveal",6,,REVEAL
+	pop %edi		// Dictionary entry.
+	addl $4,%edi		// Point to name/flags byte.
+        mov $F_HIDDEN, %eax
+	notl %eax
+        andl %eax,(%edi)	// unset the HIDDEN bit.
+	NEXT
+
 	defword "hide",4,,HIDE
 	.int WORD		// Get the word (after HIDE).
 	.int FIND		// Look up in the dictionary.
