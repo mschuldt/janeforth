@@ -116,6 +116,9 @@
 	,		\ compile it
 ;
 
+: recursive immediate latest @ reveal ;
+
+
 \	CONTROL STRUCTURES ----------------------------------------------------------------------
 \
 \ So far we have defined only very simple definitions.  Before we can go further, we really need to
