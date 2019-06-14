@@ -8,7 +8,8 @@ I didn't want to maintain the high level of commentary as I added
 new features so I removed all the tutorial comments. If you are
 looking for a tutorial go read the original Jonesforth.
 If you are confused about what this code is doing,
-go read the original Jonesforth.
+go read the original Jonesforth. The original Jonesforth files
+jonesforth.S and jonesforth.f are included here unmodified for reference.
 
 
 Modifications:
