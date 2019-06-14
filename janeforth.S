@@ -1995,12 +1995,6 @@ _COMMA:
 	(If you don't understand how LIT2 works, then you should review the material about compiling words
 	and immediate mode).
 */
-	defcode "'",1,,TICK
-	.int WORD
-        .int FIND
-        .int TCFA
-	.int EXIT
-
 /*
 	This definition of ['] uses a cheat which I copied from buzzard92.  As a result it only works in
 	compiled code.
@@ -2010,6 +2004,12 @@ _COMMA:
 	lodsl			// Get the address of the next word and skip it.
 	pushl %eax		// Push it on the stack.
 	NEXT
+
+	defword "'",1,,TICK
+        .int WORD
+        .int FIND
+        .int TCFA
+	.int EXIT
 
 /*
 	BRANCHING ----------------------------------------------------------------------
