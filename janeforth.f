@@ -116,6 +116,8 @@
 	postpone if	\ continue by calling the normal IF
 ;
 
+: rpick 1+ 4 * rsp@ + @ ;
+
 
 : ( immediate
 	1		\ allowed nested parens by keeping track of depth
