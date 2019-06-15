@@ -23,7 +23,6 @@ Renamed words:
  dsp@ -> sp!
  tell -> type
  '    -> [']
- rsp@ -> r@
  [compile] -> postpone
 
 added:
@@ -35,3 +34,4 @@ added:
   [char]
   reveal
   recursive
+  r@
