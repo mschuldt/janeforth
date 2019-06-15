@@ -1,6 +1,8 @@
 \ -*- forth -*-
 \	A sometimes minimal FORTH compiler for Linux / i386 systems. -*- asm -*-
 
+: cells 4 * ;
+
 : / /mod swap drop ;
 : mod /mod drop ;
 
@@ -116,8 +118,16 @@
 	postpone if	\ continue by calling the normal IF
 ;
 
-: rpick 1+ 4 * rsp@ + @ ;
+: rpick 1+ cells rsp@ + @ ;
 
+: _do-setup r> -rot 2dup >r >r rot >r ;
+: unloop r> rdrop rdrop >r ;
+: _do-next r> r> r> 1+ 2dup >r >r rot >r ;
+: ?do immediate ['] _do-setup , postpone begin ['] > , postpone while  ;
+: loop immediate ['] _do-next , postpone repeat ['] unloop , ;
+: i [ 2 cells ] literal rsp@ + @ ;
+: j [ 4 cells ] literal rsp@ + @ ;
+: k [ 6 cells ] literal rsp@ + @ ;
 
 : ( immediate
 	1		\ allowed nested parens by keeping track of depth
@@ -139,7 +149,7 @@
 : tuck ( x y -- y x y ) swap over ;
 : pick ( x_u ... x_1 x_0 u -- x_u ... x_1 x_0 x_u )
 	1+		( add one because of 'u' on the stack )
-	4 *		( multiply by the word size )
+	cells		( multiply by the word size )
 	sp@ +		( add to the stack pointer )
 	@    		( and fetch )
 ;
@@ -345,9 +355,6 @@
 	here @ swap	( here n )
 	here +!		( adds n to HERE, after this the old value of HERE is still on the stack )
 ;
-
-
-: cells ( n -- n ) 4 * ;
 
 : variable
 	1 cells allot	( allocate 1 cell of memory, push the pointer to this memory )

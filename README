@@ -26,6 +26,7 @@ Renamed words:
  [compile] -> postpone
 
 added:
+  '
   nil
   2/
   2*
@@ -36,3 +37,9 @@ added:
   recursive
   r@
   rpick
+  ?do
+  loop
+  unloop
+  i
+  j
+  k
